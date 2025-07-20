@@ -14,8 +14,7 @@ export default function Home() {
   },[user])
   return (
     <div>
-      <Header/>
-      <Hero/>
+       Hello World
     </div>
   );
 }
