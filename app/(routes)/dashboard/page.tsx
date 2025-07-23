@@ -6,6 +6,8 @@ import { api } from '@/convex/_generated/api'
 import React, { useEffect } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import Header from './_components/Header'
+import FileList from './_components/FileList'
 
 const Dashboard = () => {
 
@@ -47,9 +49,13 @@ const Dashboard = () => {
 
 
   return (
-    <div>Dashboard
+    <div className='p-8'>
 
-      <Button><LoginLink>Logout</LoginLink></Button>
+      <Header />
+
+      <FileList />
+
+      
     </div>
   )
 }
