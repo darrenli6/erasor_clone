@@ -13,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useRouter } from 'next/navigation'
 
 export interface FILE {
    archive:boolean,
@@ -30,6 +31,7 @@ function FileList() {
   const {fileList_,setFileList_}= useContext(FileListContext)  
   const [fileList,setFileList] = useState<any>([])
   const {user}= useKindeBrowserClient()
+  const router = useRouter()
 
   useEffect(()=>{
     console.log(fileList_)
@@ -53,7 +55,7 @@ function FileList() {
     
     {fileList&&fileList.map((file:FILE,index:number)=>(
       <tr key={index} className="*:text-gray-900 *:first:font-medium">
-        <td className="px-3 py-2 whitespace-nowrap">{file.fileName}</td>
+        <td className="px-3 py-2 whitespace-nowrap cursor-pointer" onClick={()=>router.push(`/workspace/${file._id}`)}>{file.fileName}</td>
         <td className="px-3 py-2 whitespace-nowrap">{moment(file._creationTime).format("DD MMM YYYY")}</td>
         <td className="px-3 py-2 whitespace-nowrap">{moment(file._creationTime).format("DD MMM YYYY")}</td>
         <td className="px-3 py-2 whitespace-nowrap"><Image src={user?.picture} alt="user" width={20} height={20} /></td>
