@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import EditorJS from '@editorjs/editorjs'
 // @ts-ignore
 import Header from '@editorjs/header'
@@ -11,16 +11,43 @@ import Checklist from '@editorjs/checklist'
 import Paragraph from '@editorjs/paragraph';
 // @ts-ignore
 import Warning from '@editorjs/warning';
+import { useMutation } from 'convex/react'
+import { api } from '@/convex/_generated/api'
+import { toast } from 'sonner'
+import { FILE } from '../../dashboard/_components/FileList'
 
 
-function Editor() {
+const rawDocument = {
+    "time":1721865600000,
+    "blocks":[
+        {
+            
+            "data":{
+                "text":"Document name",
+                "level":2
+            },
+            "id":"123",
+            "type":"header",
+        } 
+    ],
+    "version":"2.8.1"
+}
+function Editor({onSaveTrigger,fileId,fileData}:{onSaveTrigger:any,fileId:any,fileData:FILE}) {
 
     const ref=useRef<EditorJS>()
+    const [document,setDocument]=useState(rawDocument)
+    const updateDocument=useMutation(api.files.updateDocument)
+
 
    useEffect(() => {
-    initEditor()
+    fileData && initEditor()
 
-   },[])
+   },[fileData])
+
+   useEffect(() => {
+    console.log("trigger save ",onSaveTrigger)
+    onSaveTrigger && onSaveDocument()
+   },[onSaveTrigger])
 
   const initEditor = () => {
 
@@ -53,10 +80,31 @@ function Editor() {
         warning: Warning,
       },
       holder: 'editorjs',
+      data: fileData?JSON.parse(fileData.document):rawDocument,
     })
     ref.current=editor
   }
 
+
+  const onSaveDocument=()=>{
+     if(ref.current){
+        ref.current.save().then((data:any)=>{
+            console.log("save document ",data)
+            updateDocument({
+                _id:fileId,
+                document:JSON.stringify(data)
+            }).then(resp=>{
+               
+                    toast("save document success")
+            
+            }).catch((error:any)=>{
+                console.log("error save document ",error)
+            })
+        }).catch((error:any)=>{
+            console.log("error save document ",error)
+        })
+     }
+  }
 
   return (
     <div>
