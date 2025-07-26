@@ -117,3 +117,22 @@ function MyComponent() {
   return <button onClick={increment}>点击: {count}</button>
 }
 ```
+
+# https://docs.excalidraw.com/docs
+
+
+
+# max-w-4xl 是 Tailwind CSS 的最大宽度类名，让我详细解释：
+
+
+含义分解：
+max-w：最大宽度（max-width）
+4xl：特大尺寸级别
+具体数值：
+max-w-4xl = max-width: 56rem = 896px
+
+
+<div class="max-w-4xl mx-auto">
+  <!-- 内容最大宽度不超过 896px，且居中显示 -->
+  <p>这个容器在大屏幕上最宽 896px，小屏幕上自适应</p>
+</div>

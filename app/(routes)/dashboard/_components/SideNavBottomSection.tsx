@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
+import Constant from "@/app/_constant/Constant";
+import PricingDialog from "./PricingDialog";
 
 function SideNavButtomSection({ onFileCreate,totalFiles }: any) {
   const menuList = [
@@ -56,7 +58,7 @@ function SideNavButtomSection({ onFileCreate,totalFiles }: any) {
             New File
           </Button>
         </DialogTrigger >
-        <DialogContent>
+        {totalFiles<Constant.MAX_FREE_FILE ? <DialogContent>
           <DialogHeader>
             <DialogTitle>Create New File</DialogTitle>
             <DialogDescription>
@@ -82,7 +84,7 @@ function SideNavButtomSection({ onFileCreate,totalFiles }: any) {
               </Button>
             </DialogClose>
           </DialogFooter>
-        </DialogContent>
+        </DialogContent> : <PricingDialog /> }
       </Dialog>
 
       <div className="h-4 w-full bg-gray-200 rounded-md mt-4">

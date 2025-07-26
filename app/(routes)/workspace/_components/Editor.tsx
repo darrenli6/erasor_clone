@@ -80,7 +80,7 @@ function Editor({onSaveTrigger,fileId,fileData}:{onSaveTrigger:any,fileId:any,fi
         warning: Warning,
       },
       holder: 'editorjs',
-      data: fileData?JSON.parse(fileData.document):rawDocument,
+      data: fileData?.document?JSON.parse(fileData.document):rawDocument,
     })
     ref.current=editor
   }

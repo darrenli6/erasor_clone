@@ -5,6 +5,7 @@ import Editor from '../_components/Editor'
 import { useConvex } from 'convex/react'
 import { api } from '@/convex/_generated/api'
 import { FILE } from '../../dashboard/_components/FileList'
+import Canvas from '../_components/Canvas'
 
 function Workspace({params}:any) {
 
@@ -40,8 +41,10 @@ function Workspace({params}:any) {
             </div>
 
                 {/* canvas */}    
-            <div className='bg-red-100 h-screen '>
-                canvas
+            <div className='bg-red-100 h-screen border-l '>
+               <Canvas onSaveTrigger={triggerSave} fileId={params.fileId}
+                fileData={fileData}
+               />
             </div>
 
 
