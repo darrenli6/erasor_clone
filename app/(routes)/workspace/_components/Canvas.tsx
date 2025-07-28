@@ -12,11 +12,19 @@ function Canvas({onSaveTrigger,fileId,fileData}:{onSaveTrigger:any,fileId:any,fi
 
 
   const [whiteBoardData,setWhiteBoardData]=useState<any>(null)
+  const [files,setFiles]=useState<any>(null)
 
   const updateWhiteboard=useMutation(api.files.updateWhiteboard)
+  const updateFiles=useMutation(api.files.updateFiles)
+
+  console.log("fileData ",fileData)
+
+ 
 
   useEffect(()=>{
-    onSaveTrigger && saveWhiteboard()
+    console.log("onSaveTrigger ",onSaveTrigger)
+    onSaveTrigger && saveWhiteboard()  && saveFiles()
+   
   },[onSaveTrigger])  
 
   const saveWhiteboard=()=>{
@@ -30,19 +38,36 @@ function Canvas({onSaveTrigger,fileId,fileData}:{onSaveTrigger:any,fileId:any,fi
       })
   }  
 
+  const saveFiles=()=>{
+    console.log("files ",files)
+    updateFiles({
+       _id:fileId,
+       files:JSON.stringify(files)
+     }).then(()=>{
+       toast.success("updateFiles saved")
+     }).catch((error)=>{
+       toast.error("Error saving updateFiles")
+     })
+ }  
+
   return (
     <div style={{ height: "100vh" }}>
     {fileData && <Excalidraw  
       onChange={(excalidrawElements, appState, files)=>{
         setWhiteBoardData(excalidrawElements)
-        console.log("excalidrawElements ",excalidrawElements)
-        console.log("appState ",appState)
+        // console.log("excalidrawElements ",excalidrawElements)
+        // console.log("appState ",appState)
         console.log("files ",files)
+        // console.log("whiteBoardData ",whiteBoardData)
+        setFiles(files)
+
       }}
       theme="light"
       initialData={
         {
-            elements: fileData && fileData?.whiteboard ? JSON.parse(fileData?.whiteboard) : []
+            elements: fileData && fileData?.whiteboard ? JSON.parse(fileData?.whiteboard) : [],
+            scrollToContent: true,
+            files: fileData && fileData?.files ? JSON.parse(fileData?.files) : []
         }
       }
       UIOptions={{

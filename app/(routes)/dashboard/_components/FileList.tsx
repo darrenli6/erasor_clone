@@ -22,6 +22,7 @@ export interface FILE {
    fileName:string,
    teamId:string,
    whiteBoard:string,
+   files:string,
    _id:string,
    _creationTime:string,
 }

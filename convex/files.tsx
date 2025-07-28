@@ -8,6 +8,7 @@ export const createFile=mutation({
         createdBy:v.string(),
         archive:v.boolean(),
         document:v.string(),
+        files:v.string(),
         whiteboard:v.string()
     },
     handler:async(ctx, args) =>{
@@ -48,6 +49,18 @@ export const updateWhiteboard=mutation({
     },
     handler:async(ctx, args) =>{
         const result =await ctx.db.patch(args._id,{whiteboard:args.whiteboard});
+        return result;
+    },
+})
+
+
+export const updateFiles=mutation({
+    args:{
+        _id:v.id('files'),
+        files:v.string()
+    },
+    handler:async(ctx, args) =>{
+        const result =await ctx.db.patch(args._id,{files:args.files});
         return result;
     },
 })
